@@ -1,0 +1,20 @@
+{
+	"http.debian.net.": {
+		"type": "static",
+		"cnames": [ "apt-cacher-ng.docker" ],
+		"nameservers": [ "127.0.0.1" ]
+	},
+	"archive.ubuntu.com.": {
+		"type": "static",
+		"cnames": [ "apt-cacher-ng.docker" ],
+		"nameservers": [ "127.0.0.1" ]
+	},
+	"docker.": {
+			"type": "containers",
+			"socket": "unix:///var/run/docker.sock"
+		},
+	".": {
+		"type": "forwarding",
+		"nameservers": [ "8.8.8.8", "8.8.4.4" ]
+	}
+}
