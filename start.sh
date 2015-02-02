@@ -5,8 +5,8 @@ dir="$(dirname "$(readlink -f $BASH_SOURCE)")"
 
 docker stop rawdns || true
 docker stop apt-cacher-ng || true
-docker rm rawdns || true
-docker rm apt-cacher-ng || true
+docker rm -v rawdns || true
+docker rm -v apt-cacher-ng || true
 
 docker pull tianon/rawdns
 docker pull tianon/apt-cacher-ng
@@ -19,4 +19,5 @@ docker run -d --restart=always --name rawdns \
 
 docker run -d --restart=always --name apt-cacher-ng \
 	--dns 8.8.8.8 --dns 8.8.4.4 \
+	-v /tmp/apt-cacher-ng:/var/cache/apt-cacher-ng \
 	tianon/apt-cacher-ng
