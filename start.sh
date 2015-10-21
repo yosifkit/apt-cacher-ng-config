@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-dir="$(dirname "$(readlink -f $BASH_SOURCE)")"
+dir="$(dirname "$(readlink -f "$BASH_SOURCE")")"
 
 docker stop rawdns || true
 docker stop apt-cacher-ng || true
