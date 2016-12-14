@@ -9,6 +9,11 @@
 		"cnames": [ "apt-cacher-ng.docker" ],
 		"nameservers": [ "127.0.0.1" ]
 	},
+	"ha.pool.sks-keyservers.net": {
+		"type": "static",
+		"cnames": [ "haproxy-sks.docker" ],
+		"nameservers": [ "127.0.0.1" ]
+	},
 	"docker.": {
 			"type": "containers",
 			"socket": "unix:///var/run/docker.sock"

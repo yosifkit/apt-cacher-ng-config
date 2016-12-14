@@ -3,13 +3,11 @@ set -e
 
 dir="$(dirname "$(readlink -f "$BASH_SOURCE")")"
 
-docker stop rawdns || true
-docker stop apt-cacher-ng || true
-docker rm -v rawdns || true
-docker rm -v apt-cacher-ng || true
-
-docker pull tianon/rawdns
-docker pull tianon/apt-cacher-ng
+for container in rawdns apt-cacher-ng haproxy-sks; do
+	docker stop "$container" || true
+	docker rm -v "$container" || true
+	docker pull tianon/"$container"
+done
 
 docker run -d --restart=always --name rawdns \
 	-p 53:53/udp -p 53:53 \
@@ -17,7 +15,11 @@ docker run -d --restart=always --name rawdns \
 	-v "$dir"/dns.json:/etc/rawdns.json:ro \
 	tianon/rawdns rawdns /etc/rawdns.json
 
+docker run -d --restart=always --name haproxy-sks \
+	--dns 8.8.8.8 --dns 8.8.4.4 \
+	tianon/haproxy-sks
+
 docker run -d --restart=always --name apt-cacher-ng \
 	--dns 8.8.8.8 --dns 8.8.4.4 \
-	-v /tmp/apt-cacher-ng:/var/cache/apt-cacher-ng \
+	--tmpfs /var/cache/apt-cacher-ng \
 	tianon/apt-cacher-ng
