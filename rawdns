@@ -1,0 +1,8 @@
+#!/usr/bin/env hocker
+# vim:set ft=sh:
+
+hocker_run "tianon/$scriptName" \
+	-p 53:53/udp -p 53:53 \
+	-v /var/run/docker.sock:/var/run/docker.sock \
+	--dns 8.8.8.8 --dns 8.8.4.4 \
+	-v "$scriptDir"/dns.json:/etc/rawdns.json:ro
